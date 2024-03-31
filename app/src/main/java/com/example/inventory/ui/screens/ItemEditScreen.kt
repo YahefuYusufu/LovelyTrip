@@ -1,6 +1,8 @@
 
 package com.example.inventory.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -10,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.inventory.InventoryTopAppBar
+import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.viewModels.ItemEditViewModel
@@ -25,6 +27,7 @@ object ItemEditDestination : NavigationDestination {
     val routeWithArgs = "$route/{$itemIdArg}"
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemEditScreen(
@@ -36,7 +39,7 @@ fun ItemEditScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            InventoryTopAppBar(
+            TopAppBar(
                 title = stringResource(ItemEditDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = onNavigateUp
@@ -58,6 +61,7 @@ fun ItemEditScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun ItemEditScreenPreview() {

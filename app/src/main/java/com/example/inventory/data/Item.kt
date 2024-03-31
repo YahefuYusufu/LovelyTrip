@@ -17,12 +17,11 @@
 package com.example.inventory.data
 
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import java.time.LocalDateTime
+import java.util.Date
 
 /**
  * Entity data class represents a single row in the database.
@@ -34,19 +33,6 @@ data class Item(
     val country: String,
     var city: String,
     var summary: String,
-    var addedDate: Long?,
+    var addedDate: Long
 )
 
-class TimeConverter {
-    @TypeConverter
-    fun timeToString(time: LocalDateTime): String {
-        return time.toString()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @TypeConverter
-    fun stringToTime(string: String): LocalDateTime {
-        return LocalDateTime.parse(string)
-    }
-
-}

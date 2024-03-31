@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.inventory.InventoryTopAppBar
+import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
@@ -67,7 +67,7 @@ fun ItemDetailsScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            InventoryTopAppBar(
+            TopAppBar(
                 title = stringResource(ItemDetailsDestination.titleRes),
                 canNavigateBack = true,
                 navigateUp = navigateBack

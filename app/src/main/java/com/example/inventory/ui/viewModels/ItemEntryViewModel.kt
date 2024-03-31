@@ -44,7 +44,7 @@ data class ItemDetails(
     val country: String = "",
     val city: String = "",
     val summary: String = "",
-    val addedDate: Long? = null,
+    val addedDate: Long = System.currentTimeMillis(),
 )
 
 
