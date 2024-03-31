@@ -1,5 +1,5 @@
 
-package com.example.inventory.ui.item
+package com.example.inventory.ui.screens
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +41,9 @@ import com.example.inventory.InventoryTopAppBar
 import com.example.inventory.R
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
+import com.example.inventory.ui.viewModels.ItemDetailsUiState
+import com.example.inventory.ui.viewModels.ItemDetailsViewModel
+import com.example.inventory.ui.viewModels.toItem
 import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.ui.theme.InventoryTheme
 import kotlinx.coroutines.launch
@@ -161,7 +164,7 @@ fun ItemDetails(
         ) {
             ItemDetailsRow(
                 labelResID = R.string.item,
-                itemDetail = item.name,
+                itemDetail = item.country,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
                         id = R.dimen
@@ -171,7 +174,7 @@ fun ItemDetails(
             )
             ItemDetailsRow(
                 labelResID = R.string.quantity_in_stock,
-                itemDetail = item.quantity.toString(),
+                itemDetail = item.city,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
                         id = R.dimen
@@ -181,7 +184,7 @@ fun ItemDetails(
             )
             ItemDetailsRow(
                 labelResID = R.string.price,
-                itemDetail = item.formatedPrice(),
+                itemDetail = item.summary,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
                         id = R.dimen
@@ -229,8 +232,14 @@ private fun DeleteConfirmationDialog(
 @Composable
 fun ItemDetailsScreenPreview() {
     InventoryTheme {
-        ItemDetailsBody(ItemDetailsUiState(
-            outOfStock = true, itemDetails = ItemDetails(1, "Pen", "$100", "10")
+        ItemDetailsBody(
+            ItemDetailsUiState(
+            outOfStock = true, itemDetails = com.example.inventory.ui.viewModels.ItemDetails(
+                    1,
+                    "Pen",
+                    "$100",
+                    "10"
+                )
         ), onSellItem = {}, onDelete = {})
     }
 }
