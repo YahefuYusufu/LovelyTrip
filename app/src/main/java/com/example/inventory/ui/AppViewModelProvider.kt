@@ -7,10 +7,10 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.inventory.LovelyTripApplication
-import com.example.inventory.ui.home.HomeViewModel
-import com.example.inventory.ui.item.ItemDetailsViewModel
-import com.example.inventory.ui.item.ItemEditViewModel
-import com.example.inventory.ui.item.ItemEntryViewModel
+import com.example.inventory.ui.viewModels.HomeViewModel
+import com.example.inventory.ui.viewModels.ItemDetailsViewModel
+import com.example.inventory.ui.viewModels.ItemEditViewModel
+import com.example.inventory.ui.viewModels.ItemEntryViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app

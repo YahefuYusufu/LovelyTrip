@@ -3,17 +3,21 @@
 package com.example.inventory
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.inventory.R.string
@@ -29,7 +33,7 @@ fun LovelyTripApp(navController: NavHostController = rememberNavController()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InventoryTopAppBar(
+fun TopAppBar(
     title: String,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,
@@ -37,7 +41,14 @@ fun InventoryTopAppBar(
     navigateUp: () -> Unit = {}
 ) {
     CenterAlignedTopAppBar(
-        title = { Text(title) },
+        title = {
+            Text(
+            title,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.displayMedium,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Cursive
+        ) },
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         navigationIcon = {

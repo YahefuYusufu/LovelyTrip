@@ -1,39 +1,29 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.example.inventory.ui.home
+package com.example.inventory.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,18 +33,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.inventory.InventoryTopAppBar
+import com.example.inventory.TopAppBar
 import com.example.inventory.R
+import com.example.inventory.components.changeMillisToDateString
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
-import com.example.inventory.ui.item.formatedPrice
+import com.example.inventory.ui.viewModels.HomeViewModel
 import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.ui.theme.InventoryTheme
 
@@ -79,9 +75,11 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .background(color = MaterialTheme.colorScheme.onSecondary),
         topBar = {
-            InventoryTopAppBar(
+            TopAppBar(
                 title = stringResource(HomeDestination.titleRes),
                 canNavigateBack = false,
                 scrollBehavior = scrollBehavior
@@ -105,7 +103,7 @@ fun HomeScreen(
             onItemClick = navigateToItemUpdate,
             modifier = modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .fillMaxSize(),
         )
     }
 }
@@ -117,6 +115,12 @@ private fun HomeBody(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+
+        ,
+
     ) {
         if (itemList.isEmpty()) {
             Text(
@@ -140,55 +144,109 @@ private fun InventoryList(
 ) {
     LazyColumn(modifier = modifier) {
         items(items = itemList, key = { it.id }) { item ->
-            InventoryItem(item = item,
+            TripItem(
+                item = item,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
-                    .clickable { onItemClick(item) })
-        }
-    }
-}
-
-@Composable
-private fun InventoryItem(
-    item: Item, modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier, elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = item.name,
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    text = item.formatedPrice(),
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            Text(
-                text = stringResource(R.string.in_stock, item.quantity),
-                style = MaterialTheme.typography.titleMedium
+                    .clickable { onItemClick(item) },
+                isFavorite = true,
+                onFavoriteClick = {}
             )
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun HomeBodyPreview() {
-    InventoryTheme {
-        HomeBody(listOf(
-            Item(1, "Game", 100.0, 20), Item(2, "Pen", 200.0, 30), Item(3, "TV", 300.0, 50)
-        ), onItemClick = {})
+private fun TripItem(
+    item: Item,
+    modifier: Modifier = Modifier,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit
+) {
+    Card(
+        modifier = modifier
+            .padding(dimensionResource(id = R.dimen.padding_small))
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onTertiary
+        ),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column(
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small))
+        ) {
+            Box(
+                modifier = Modifier.align(Alignment.End)
+            ) {
+                IconButton(
+                    onClick = onFavoriteClick
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = null,
+                        tint = if (isFavorite) Color.Red else MaterialTheme.colorScheme.onBackground
+                    )
+                }
+            }
+            Image(
+                painter = painterResource(id = R.drawable.ic_splash),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = ContentScale.Fit
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = item.country,
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Cursive
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    text = item.city,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Cursive
+                )
+            }
+
+        }
+        Text(
+            text = item.summary,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Cursive
+        )
+
+        Text(
+            text = item.addedDate.changeMillisToDateString(),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier  = Modifier
+                .align(Alignment.End)
+                .padding(dimensionResource(id = R.dimen.padding_extra_small)),
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Cursive
+        )
+
+
+
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -198,12 +256,19 @@ fun HomeBodyEmptyListPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun InventoryItemPreview() {
-    InventoryTheme {
-        InventoryItem(
-            Item(1, "Game", 100.0, 20),
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun InventoryItemPreview() {
+//    InventoryTheme {
+//        InventoryItem(
+//            Item(
+//                1,
+//                "Malmo",
+//                "malmo",
+//                "visited a lot place",
+//                addedDate = 123123
+//                )
+//
+//        )
+//    }
+//}

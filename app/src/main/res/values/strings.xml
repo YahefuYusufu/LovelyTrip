@@ -19,4 +19,9 @@
     <string name="save_action">Save</string>
     <string name="sell">Sell</string>
     <string name="yes">Yes</string>
+    <string name="country">Country</string>
+    <string name="city">Country</string>
+    <string name="summary">Country</string>
+    <string name="addedDate">Country</string>
+
     <string name="required_fields">*required fields</string></resources>

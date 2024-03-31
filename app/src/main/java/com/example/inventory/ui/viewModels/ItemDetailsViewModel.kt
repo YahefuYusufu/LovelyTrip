@@ -1,10 +1,11 @@
 
-package com.example.inventory.ui.item
+package com.example.inventory.ui.viewModels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.inventory.data.ItemsRepository
+import com.example.inventory.ui.screens.ItemDetailsDestination
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -30,7 +31,7 @@ class ItemDetailsViewModel(
         itemsRepository.getItemStream(itemId)
             .filterNotNull()
             .map {
-                ItemDetailsUiState(outOfStock = it.quantity <= 0, itemDetails = it.toItemDetails())
+                ItemDetailsUiState( itemDetails = it.toItemDetails())
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
@@ -43,9 +44,9 @@ class ItemDetailsViewModel(
     fun reduceQuantityByOne() {
         viewModelScope.launch {
             val currentItem = uiState.value.itemDetails.toItem()
-            if (currentItem.quantity > 0) {
-                itemsRepository.updateItem(currentItem.copy(quantity = currentItem.quantity - 1))
-            }
+//            if (currentItem.quantity > 0) {
+//                itemsRepository.updateItem(currentItem.copy(quantity = currentItem.quantity - 1))
+//            }
         }
     }
 

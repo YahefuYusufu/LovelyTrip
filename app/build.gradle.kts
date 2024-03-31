@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.lovelyTrip"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -78,4 +78,8 @@ dependencies {
 
     //Splash API
     implementation(libs.androidx.core.splashscreen)
+
+    // Implementing the `core` module is mandatory for using other use cases.
+    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
+    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
 }

@@ -2,6 +2,8 @@
 
 package com.example.inventory.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -9,16 +11,17 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.inventory.ui.home.HomeDestination
-import com.example.inventory.ui.home.HomeScreen
-import com.example.inventory.ui.item.ItemDetailsDestination
-import com.example.inventory.ui.item.ItemDetailsScreen
-import com.example.inventory.ui.item.ItemEditDestination
-import com.example.inventory.ui.item.ItemEditScreen
-import com.example.inventory.ui.item.ItemEntryDestination
-import com.example.inventory.ui.item.ItemEntryScreen
+import com.example.inventory.ui.screens.HomeDestination
+import com.example.inventory.ui.screens.HomeScreen
+import com.example.inventory.ui.screens.ItemDetailsDestination
+import com.example.inventory.ui.screens.ItemDetailsScreen
+import com.example.inventory.ui.screens.ItemEditDestination
+import com.example.inventory.ui.screens.ItemEditScreen
+import com.example.inventory.ui.screens.ItemEntryDestination
+import com.example.inventory.ui.screens.ItemEntryScreen
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavHost(
     navController: NavHostController,
