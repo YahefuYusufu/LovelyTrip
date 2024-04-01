@@ -76,8 +76,7 @@ fun HomeScreen(
 
     Scaffold(
         modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .background(color = MaterialTheme.colorScheme.onSecondary),
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = stringResource(HomeDestination.titleRes),
@@ -89,7 +88,8 @@ fun HomeScreen(
             FloatingActionButton(
                 onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+                containerColor = MaterialTheme.colorScheme.onSecondary
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -116,7 +116,7 @@ private fun HomeBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.background
             )
 
         ,
@@ -168,7 +168,7 @@ private fun TripItem(
             .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onTertiary
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
         ),
 
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
