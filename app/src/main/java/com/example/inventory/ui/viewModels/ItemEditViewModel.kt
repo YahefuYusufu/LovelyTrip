@@ -36,9 +36,7 @@ class ItemEditViewModel(
 
 
     suspend fun updateItem() {
-
             itemsRepository.updateItem(itemUiState.itemDetails.toItem())
-
     }
 
 

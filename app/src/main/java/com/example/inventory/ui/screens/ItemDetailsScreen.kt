@@ -2,18 +2,19 @@
 package com.example.inventory.ui.screens
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,10 +33,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
@@ -88,7 +92,6 @@ fun ItemDetailsScreen(
     ) { innerPadding ->
         ItemDetailsBody(
             itemDetailsUiState = uiState.value,
-            onSellItem = { viewModel.reduceQuantityByOne() },
             onDelete = {
                 coroutineScope.launch {
                     viewModel.deleteItem()
@@ -105,7 +108,6 @@ fun ItemDetailsScreen(
 @Composable
 private fun ItemDetailsBody(
     itemDetailsUiState: ItemDetailsUiState,
-    onSellItem: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -117,14 +119,7 @@ private fun ItemDetailsBody(
         ItemDetails(
             item = itemDetailsUiState.itemDetails.toItem(), modifier = Modifier.fillMaxWidth()
         )
-        Button(
-            onClick = onSellItem,
-            modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.small,
-            enabled = !itemDetailsUiState.outOfStock
-        ) {
-            Text(stringResource(R.string.sell))
-        }
+
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true },
             shape = MaterialTheme.shapes.small,
@@ -163,7 +158,7 @@ fun ItemDetails(
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
         ) {
             ItemDetailsRow(
-                labelResID = R.string.item,
+                labelResID = R.string.country,
                 itemDetail = item.country,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
@@ -173,7 +168,7 @@ fun ItemDetails(
                 )
             )
             ItemDetailsRow(
-                labelResID = R.string.quantity_in_stock,
+                labelResID = R.string.city,
                 itemDetail = item.city,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
@@ -183,7 +178,7 @@ fun ItemDetails(
                 )
             )
             ItemDetailsRow(
-                labelResID = R.string.price,
+                labelResID = R.string.summary,
                 itemDetail = item.summary,
                 modifier = Modifier.padding(
                     horizontal = dimensionResource(
@@ -191,6 +186,15 @@ fun ItemDetails(
                             .padding_medium
                     )
                 )
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_splash),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = ContentScale.Fit
             )
         }
 
@@ -238,8 +242,9 @@ fun ItemDetailsScreenPreview() {
                     1,
                     "Pen",
                     "$100",
-                    "10"
+                    "10",
+                addedDate = 123123132
                 )
-        ), onSellItem = {}, onDelete = {})
+        ),  onDelete = {})
     }
 }

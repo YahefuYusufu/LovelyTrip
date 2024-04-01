@@ -208,7 +208,7 @@ private fun TripItem(
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive
+                    fontFamily = FontFamily.Monospace
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -216,7 +216,7 @@ private fun TripItem(
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive
+                    fontFamily = FontFamily.Monospace
                 )
             }
 
@@ -228,7 +228,7 @@ private fun TripItem(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive
+            fontFamily = FontFamily.Monospace
         )
 
         Text(
@@ -239,11 +239,8 @@ private fun TripItem(
                 .align(Alignment.End)
                 .padding(dimensionResource(id = R.dimen.padding_extra_small)),
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive
+            fontFamily = FontFamily.Monospace
         )
-
-
-
     }
 }
 
@@ -256,19 +253,4 @@ fun HomeBodyEmptyListPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun InventoryItemPreview() {
-//    InventoryTheme {
-//        InventoryItem(
-//            Item(
-//                1,
-//                "Malmo",
-//                "malmo",
-//                "visited a lot place",
-//                addedDate = 123123
-//                )
-//
-//        )
-//    }
-//}
+
