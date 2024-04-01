@@ -3,7 +3,6 @@
 package com.example.inventory
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -42,8 +41,7 @@ fun TopAppBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Text(
-            title,
+            Text(title,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,

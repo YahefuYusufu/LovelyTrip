@@ -76,8 +76,7 @@ fun HomeScreen(
 
     Scaffold(
         modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .background(color = MaterialTheme.colorScheme.onSecondary),
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopAppBar(
                 title = stringResource(HomeDestination.titleRes),
@@ -89,7 +88,8 @@ fun HomeScreen(
             FloatingActionButton(
                 onClick = navigateToItemEntry,
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large)),
+                containerColor = MaterialTheme.colorScheme.onSecondary
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -116,7 +116,7 @@ private fun HomeBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.background
             )
 
         ,
@@ -168,7 +168,7 @@ private fun TripItem(
             .padding(dimensionResource(id = R.dimen.padding_small))
             .fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onTertiary
+            containerColor = MaterialTheme.colorScheme.inverseOnSurface
         ),
 
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
@@ -208,7 +208,7 @@ private fun TripItem(
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive
+                    fontFamily = FontFamily.Monospace
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -216,7 +216,7 @@ private fun TripItem(
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Cursive
+                    fontFamily = FontFamily.Monospace
                 )
             }
 
@@ -228,7 +228,7 @@ private fun TripItem(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive
+            fontFamily = FontFamily.Monospace
         )
 
         Text(
@@ -239,11 +239,8 @@ private fun TripItem(
                 .align(Alignment.End)
                 .padding(dimensionResource(id = R.dimen.padding_extra_small)),
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive
+            fontFamily = FontFamily.Monospace
         )
-
-
-
     }
 }
 
@@ -256,19 +253,4 @@ fun HomeBodyEmptyListPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun InventoryItemPreview() {
-//    InventoryTheme {
-//        InventoryItem(
-//            Item(
-//                1,
-//                "Malmo",
-//                "malmo",
-//                "visited a lot place",
-//                addedDate = 123123
-//                )
-//
-//        )
-//    }
-//}
+

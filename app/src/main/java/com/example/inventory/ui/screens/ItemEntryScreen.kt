@@ -1,8 +1,7 @@
 
 package com.example.inventory.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -76,6 +75,7 @@ fun ItemEntryScreen(
             onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
+
                     viewModel.saveItem()
                     navigateBack()
                 }
@@ -94,31 +94,30 @@ fun ItemEntryBody(
     itemUiState: ItemUiState,
     onItemValueChange: (ItemDetails) -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var isDataPickerDialogOpen by rememberSaveable  { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = Instant.now().toEpochMilli()
     )
+    val selectedDate = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
 
     Column(
         modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large))
     ) {
-        ItemInputForm(
-            itemDetails = itemUiState.itemDetails,
-            onValueChange = onItemValueChange,
-            modifier = Modifier.fillMaxWidth()
-        )
         ItemDatePicker(
             state = datePickerState,
             isOpen = isDataPickerDialogOpen,
             onDismissRequest = {
-                isDataPickerDialogOpen =false
+                isDataPickerDialogOpen = false
             },
             onConfirmButtonClicked = {
+                onItemValueChange(itemUiState.itemDetails.copy(addedDate = selectedDate))
                 isDataPickerDialogOpen = false
-            })
+
+            }
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -127,7 +126,7 @@ fun ItemEntryBody(
         ){
             Text(
                 text = datePickerState.selectedDateMillis.changeMillisToDateString(),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             IconButton(
@@ -140,6 +139,11 @@ fun ItemEntryBody(
                 )
             }
         }
+        ItemInputForm(
+            itemDetails = itemUiState.itemDetails,
+            onValueChange = onItemValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
         Button(
             onClick = onSaveClick,
             shape = MaterialTheme.shapes.small,
@@ -213,14 +217,13 @@ fun ItemInputForm(
 
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 private fun ItemEntryScreenPreview() {
     InventoryTheme {
         ItemEntryBody(itemUiState = ItemUiState(
             ItemDetails(
-                country = "Sweden", city = "Malmo", summary = "Visited to a lot place."
+                country = "Sweden", city = "Malmo", summary = "Visited to a lot place.", addedDate = 1233
             )
         ), onItemValueChange = {}, onSaveClick = {})
     }
