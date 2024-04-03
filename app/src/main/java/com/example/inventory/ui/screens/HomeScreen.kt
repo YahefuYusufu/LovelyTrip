@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
+import com.example.inventory.components.RatingDisplay
 import com.example.inventory.components.changeMillisToDateString
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
@@ -129,7 +130,7 @@ private fun HomeBody(
                 style = MaterialTheme.typography.titleLarge
             )
         } else {
-            InventoryList(
+            TripList(
                 itemList = itemList,
                 onItemClick = { onItemClick(it.id) },
                 modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_small))
@@ -139,7 +140,7 @@ private fun HomeBody(
 }
 
 @Composable
-private fun InventoryList(
+private fun TripList(
     itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
@@ -221,23 +222,32 @@ private fun TripItem(
             }
 
         }
+
+
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = item.addedDate.changeMillisToDateString(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(dimensionResource(id = R.dimen.padding_extra_small)),
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Monospace
+            )
+            RatingDisplay(
+                rating = item.rating,
+                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_extra_small))
+            )
+        }
         Text(
             text = item.summary,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace
-        )
-
-        Text(
-            text = item.addedDate.changeMillisToDateString(),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier  = Modifier
-                .align(Alignment.End)
-                .padding(dimensionResource(id = R.dimen.padding_extra_small)),
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Monospace
         )

@@ -35,6 +35,7 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
         val city: String = "",
         val summary: String = "",
         var addedDate: Long = System.currentTimeMillis(),
+        var rating: Int = 0
     )
 
     fun ItemDetails.toItem(): Item = Item(
@@ -42,8 +43,8 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
         country = country,
         city = city,
         summary = summary,
-        addedDate = addedDate
-
+        addedDate = addedDate,
+        rating = rating
     )
 
 
@@ -59,5 +60,6 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
         country = country,
         city = city,
         summary = summary,
-        addedDate = addedDate
+        addedDate = addedDate,
+        rating = rating
     )

@@ -4,6 +4,7 @@ package com.example.inventory.ui.screens
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
+import com.example.inventory.components.RatingDisplay
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.viewModels.ItemDetailsUiState
@@ -187,6 +189,9 @@ fun ItemDetails(
                     )
                 )
             )
+
+               RatingDisplay(rating = item.rating)
+
 
             Image(
                 painter = painterResource(id = R.drawable.ic_splash),

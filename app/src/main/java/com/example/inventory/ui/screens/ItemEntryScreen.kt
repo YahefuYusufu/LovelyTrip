@@ -37,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.components.ItemDatePicker
+import com.example.inventory.components.RatingInputRow
 import com.example.inventory.components.changeMillisToDateString
 import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.viewModels.ItemDetails
@@ -213,6 +214,9 @@ fun ItemInputForm(
             enabled = enabled,
             singleLine = false,
         )
+        RatingInputRow(
+            rating = itemDetails.rating,
+            onRatingChange = {rating -> onValueChange(itemDetails.copy(rating = rating ))} )
     }
 
 }
