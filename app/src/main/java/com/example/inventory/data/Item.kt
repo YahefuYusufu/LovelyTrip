@@ -18,6 +18,7 @@ data class Item(
     val country: String,
     val city: String,
     val summary: String,
-    val addedDate: Long
+    val addedDate: Long,
+    val rating: Int
 )
 

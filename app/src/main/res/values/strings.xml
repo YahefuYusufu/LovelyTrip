@@ -23,5 +23,10 @@
     <string name="city">City</string>
     <string name="summary">Summary</string>
     <string name="addedDate">Date</string>
+    <string name="rating">Rating</string>
+    <plurals name="number_of_stars">
+        <item quantity="one">%d star</item>
+        <item quantity="other">%d stars</item>
+    </plurals>
 
     <string name="required_fields">*required fields</string></resources>
