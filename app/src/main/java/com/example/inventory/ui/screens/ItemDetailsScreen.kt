@@ -51,6 +51,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.components.RatingDisplay
+import com.example.inventory.components.changeMillisToDateString
 import com.example.inventory.data.Item
 import com.example.inventory.ui.AppViewModelProvider
 import com.example.inventory.ui.viewModels.ItemDetailsUiState
@@ -195,6 +196,16 @@ fun ItemDetails(
                     )
                 )
             )
+            ItemDetailsRow(
+                labelResID = R.string.addedDate,
+                itemDetail = item.addedDate.changeMillisToDateString(),
+                modifier = Modifier.padding(
+                    horizontal = dimensionResource(
+                        id = R.dimen
+                            .padding_medium
+                    )
+                )
+            )
             ItemDetailsSummary(
                 labelResID = R.string.summary,
                 itemDetail = item.summary,
@@ -254,6 +265,16 @@ private fun ItemDetailsRow(
     }
 }
 @Composable
+private fun ItemAddedDateRow(
+    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        Text(text = stringResource(labelResID), fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text = itemDetail)
+    }
+}
+@Composable
 private fun ItemDetailsSummary(
     @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
 ) {
@@ -293,7 +314,7 @@ fun ItemDetailsScreenPreview() {
     InventoryTheme {
         ItemDetailsBody(
             ItemDetailsUiState(
-            outOfStock = true, itemDetails = com.example.inventory.ui.viewModels.ItemDetails(
+           itemDetails = com.example.inventory.ui.viewModels.ItemDetails(
                     1,
                     "Pen",
                     "$100",

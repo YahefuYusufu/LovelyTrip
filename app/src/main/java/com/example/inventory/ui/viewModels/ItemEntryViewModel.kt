@@ -15,18 +15,23 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
 
     fun updateUiState(itemDetails: ItemDetails) {
         itemUiState =
-            ItemUiState(itemDetails = itemDetails)
+            ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))
     }
 
     suspend fun saveItem() {
-
         itemsRepository.insertItem(itemUiState.itemDetails.toItem())
     }
 
+    private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
+        return with(uiState) {
+            country.isNotBlank() && city.isNotBlank() && summary.isNotBlank()
+        }
+    }
 }
 
     data class ItemUiState(
         val itemDetails: ItemDetails = ItemDetails(),
+        val isEntryValid: Boolean = false
     )
 
     data class ItemDetails(
@@ -34,8 +39,8 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
         val country: String = "",
         val city: String = "",
         val summary: String = "",
-        var addedDate: Long = System.currentTimeMillis(),
-        var rating: Int = 0
+        var addedDate: Long = System.currentTimeMillis() ,
+        var rating: Int = 1
     )
 
     fun ItemDetails.toItem(): Item = Item(
@@ -51,8 +56,9 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
     /**
      * Extension function to convert [Item] to [ItemUiState]
      */
-    fun Item.toItemUiState(): ItemUiState = ItemUiState(
+    fun Item.toItemUiState(isEntryValid: Boolean = false): ItemUiState = ItemUiState(
         itemDetails = this.toItemDetails(),
+        isEntryValid = isEntryValid
     )
 
     fun Item.toItemDetails(): ItemDetails = ItemDetails(

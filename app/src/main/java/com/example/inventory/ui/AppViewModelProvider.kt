@@ -21,29 +21,29 @@ object AppViewModelProvider {
         initializer {
             ItemEditViewModel(
                 this.createSavedStateHandle(),
-                inventoryApplication().container.itemsRepository
+                lovelyTripApplication().container.itemsRepository
             )
         }
         // Initializer for ItemEntryViewModel
         initializer {
-            ItemEntryViewModel(inventoryApplication().container.itemsRepository)
+            ItemEntryViewModel(lovelyTripApplication().container.itemsRepository)
         }
 
         // Initializer for ItemDetailsViewModel
         initializer {
             ItemDetailsViewModel(
                 this.createSavedStateHandle(),
-                inventoryApplication().container.itemsRepository
+                lovelyTripApplication().container.itemsRepository
             )
         }
 
         // Initializer for HomeViewModel
         initializer {
-            HomeViewModel(inventoryApplication().container.itemsRepository)
+            HomeViewModel(lovelyTripApplication().container.itemsRepository)
         }
     }
 }
 
 
-fun CreationExtras.inventoryApplication(): LovelyTripApplication =
+fun CreationExtras.lovelyTripApplication(): LovelyTripApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as LovelyTripApplication)
