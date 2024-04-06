@@ -83,5 +83,5 @@ dependencies {
     implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
     implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
 
-    implementation(libs.coll.compose)
+    implementation("io.coil-kt:coil-compose:2.6.0")
 }
