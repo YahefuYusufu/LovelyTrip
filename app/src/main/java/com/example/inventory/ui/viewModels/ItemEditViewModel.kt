@@ -19,7 +19,9 @@ class ItemEditViewModel(
     private val itemsRepository: ItemsRepository
 ) : ViewModel() {
 
-
+    /**
+     * Holds current item ui state
+     */
     var itemUiState by mutableStateOf(ItemUiState())
         private set
 
@@ -30,24 +32,26 @@ class ItemEditViewModel(
             itemUiState = itemsRepository.getItemStream(itemId)
                 .filterNotNull()
                 .first()
-                .toItemUiState()
+                .toItemUiState(true)
         }
     }
 
 
     suspend fun updateItem() {
-            itemsRepository.updateItem(itemUiState.itemDetails.toItem())
+            if (validateInput(itemUiState.itemDetails)) {
+                itemsRepository.updateItem(itemUiState.itemDetails.toItem())
+            }
     }
 
 
     fun updateUiState(itemDetails: ItemDetails) {
         itemUiState =
-            ItemUiState(itemDetails = itemDetails)
+            ItemUiState(itemDetails = itemDetails,isEntryValid = validateInput(itemDetails))
     }
 
-//    private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
-//        return with(uiState) {
-//            name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
-//        }
-//    }
+    private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
+        return with(uiState) {
+            country.isNotBlank() && city.isNotBlank() && summary.isNotBlank()
+        }
+    }
 }

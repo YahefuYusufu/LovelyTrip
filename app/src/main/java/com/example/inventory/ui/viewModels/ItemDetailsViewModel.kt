@@ -30,16 +30,13 @@ class ItemDetailsViewModel(
         itemsRepository.getItemStream(itemId)
             .filterNotNull()
             .map {
-                ItemDetailsUiState( itemDetails = it.toItemDetails())
+                ItemDetailsUiState(itemDetails = it.toItemDetails())
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
                 initialValue = ItemDetailsUiState()
             )
 
-    /**
-     * Reduces the item quantity by one and update the [ItemsRepository]'s data source.
-     */
 
     /**
      * Deletes the item from the [ItemsRepository]'s data source.
@@ -57,6 +54,5 @@ class ItemDetailsViewModel(
  * UI state for ItemDetailsScreen
  */
 data class ItemDetailsUiState(
-    val outOfStock: Boolean = true,
-    val itemDetails: ItemDetails = ItemDetails(addedDate = System.currentTimeMillis())
+    val itemDetails: ItemDetails = ItemDetails()
 )

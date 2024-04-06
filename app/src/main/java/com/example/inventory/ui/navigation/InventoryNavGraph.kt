@@ -48,10 +48,8 @@ fun NavHost(
                 type = NavType.IntType
             })
         ) {
-            ItemDetailsScreen(
-                navigateToEditItem = { navController.navigate("${ItemEditDestination.route}/$it") },
-                navigateBack = { navController.navigateUp() }
-            )
+           ItemDetailsScreen(navigateToEditItem = { navController.navigate("${ItemEditDestination.route}/$it")},
+               navigateBack = { navController.navigateUp()})
         }
         composable(
             route = ItemEditDestination.routeWithArgs,
