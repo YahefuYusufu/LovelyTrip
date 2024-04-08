@@ -2,26 +2,23 @@
 package com.example.inventory.ui.screens
 
 
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,19 +36,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.components.ItemDatePicker
@@ -63,6 +54,7 @@ import com.example.inventory.ui.viewModels.ItemEntryViewModel
 import com.example.inventory.ui.viewModels.ItemUiState
 import com.example.inventory.ui.navigation.NavigationDestination
 import com.example.inventory.ui.theme.InventoryTheme
+import com.example.inventory.ui.viewModels.loadBitmapFromUri
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -71,6 +63,7 @@ object ItemEntryDestination : NavigationDestination {
     override val titleRes = R.string.item_entry_title
 }
 
+@RequiresApi(Build.VERSION_CODES.P)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemEntryScreen(
@@ -107,6 +100,7 @@ fun ItemEntryScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun ItemEntryBody(
     itemUiState: ItemUiState,
@@ -123,8 +117,7 @@ fun ItemEntryBody(
 
         ItemInputForm(
             itemDetails = itemUiState.itemDetails,
-            onValueChange = onItemValueChange,
-            modifier = Modifier.fillMaxWidth()
+            onValueChange = onItemValueChange
         )
         Button(
             onClick = onSaveClick,
@@ -143,7 +136,6 @@ fun ItemEntryBody(
 @Composable
 fun ItemInputForm(
     itemDetails: ItemDetails,
-    modifier: Modifier = Modifier,
     onValueChange: (ItemDetails) -> Unit = {},
     enabled: Boolean = true
 ) {
@@ -152,13 +144,27 @@ fun ItemInputForm(
         initialSelectedDateMillis = Instant.now().toEpochMilli()
     )
     val selectedDate = datePickerState.selectedDateMillis ?: System.currentTimeMillis()
+
+    // Image-related state
     var selectedImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
-    val photoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = {
-            selectedImageUri = it
+    var bitmap: Bitmap? by rememberSaveable { mutableStateOf(null) }
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    // Activity result launcher for picking an image from gallery
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+    ) { uri: Uri? ->
+        uri?.let {
+            selectedImageUri = uri
+            coroutineScope.launch {
+                loadBitmapFromUri( context.contentResolver, uri)?.let { loadedBitmap ->
+                    bitmap = loadedBitmap
+                    onValueChange(itemDetails.copy(image = loadedBitmap))
+                }
+            }
         }
-    )
+    }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -251,48 +257,32 @@ fun ItemInputForm(
             }
         }
 
-        //Image Picker
-       Column(
-           modifier = Modifier.fillMaxWidth(),
-           horizontalAlignment = Alignment.CenterHorizontally
-       ) {
-           Button(
-               modifier = Modifier.height(46.dp),
-               shape = RoundedCornerShape(8.dp),
-               colors = ButtonDefaults.buttonColors(
-                   containerColor = MaterialTheme.colorScheme.primary,
-                   contentColor = MaterialTheme.colorScheme.onSecondary
-               ),
-               onClick = {
-                   photoPickerLauncher.launch(
-                       PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                   )
-               }) {
-               Row {
-                   Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                   Text(
-                       "Pick a Photo",
-                       style = TextStyle(fontSize = 18.sp)
-                   )
-               }
+//        //Image Picker
+        Button(
+            onClick = { imagePickerLauncher.launch("image/*")},
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .fillMaxWidth()
+        ) {
+            Text("Select Image")
+        }
 
-               AsyncImage(
-                   modifier = Modifier
-                       .fillMaxWidth()
-                       .height(240.dp)
-                       .clip(RoundedCornerShape(R.dimen.padding_small))
-                   ,
-                   model = selectedImageUri,
-                   contentDescription = null,
-                   contentScale = ContentScale.FillBounds
-                   )
-           }
-
-
-       }
+        //Display selected Image
+        bitmap?.let { loadedBitmap ->
+            Image(
+                bitmap = loadedBitmap.asImageBitmap(),
+                contentDescription = null
+            )
+        }
     }
+
 }
 
+
+
+
+
+@RequiresApi(Build.VERSION_CODES.P)
 @Preview(showBackground = true)
 @Composable
 private fun ItemEntryScreenPreview() {

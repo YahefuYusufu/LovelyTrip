@@ -1,6 +1,8 @@
 
 package com.example.inventory.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -18,6 +20,7 @@ import com.example.inventory.ui.screens.ItemEntryDestination
 import com.example.inventory.ui.screens.ItemEntryScreen
 
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun NavHost(
     navController: NavHostController,
