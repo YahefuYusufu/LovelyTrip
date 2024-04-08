@@ -48,6 +48,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
 }
 
 dependencies {
@@ -70,6 +71,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.material.icons.extended.android)
     //Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.core.ktx)
@@ -80,8 +82,11 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     // Implementing the `core` module is mandatory for using other use cases.
-    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
-    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
+    implementation("com.maxkeppeler.sheets-compose-dialogs:core:1.3.0")
+    implementation("com.maxkeppeler.sheets-compose-dialogs:calendar:1.3.0")
 
-    implementation(libs.coll.compose)
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+
+
 }

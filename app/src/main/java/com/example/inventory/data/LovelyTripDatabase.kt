@@ -6,12 +6,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
+import androidx.room.TypeConverters
+import com.example.inventory.components.Converters
 
 /**
  * Database class with a singleton Instance object.
  */
-@Database(entities = [Item::class], version = 6, exportSchema = false)
+@Database(entities = [Item::class], version = 7, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class LovelyTripDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao

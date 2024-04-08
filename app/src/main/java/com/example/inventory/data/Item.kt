@@ -2,11 +2,10 @@
 package com.example.inventory.data
 
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import java.time.LocalDateTime
-import java.util.Date
+
 
 /**
  * Entity data class represents a single row in the database.
@@ -19,6 +18,7 @@ data class Item(
     val city: String,
     val summary: String,
     val addedDate: Long,
-    val rating: Int
+    val rating: Int,
+    val image: Bitmap?
 )
 
