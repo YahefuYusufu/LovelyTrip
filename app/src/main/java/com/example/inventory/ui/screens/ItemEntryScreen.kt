@@ -4,6 +4,7 @@ package com.example.inventory.ui.screens
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -251,40 +253,42 @@ fun ItemInputForm(
 
         //Image Picker
        Column(
-           modifier = Modifier.fillMaxWidth()
+           modifier = Modifier.fillMaxWidth(),
+           horizontalAlignment = Alignment.CenterHorizontally
        ) {
-           Text(
-               text = "Choose a Photo",
-               style = TextStyle(
-                   fontSize = 24.sp,
-                   fontWeight = FontWeight.Medium,
-                   color = MaterialTheme.colorScheme.secondaryContainer
-               )
-           )
-           Spacer(modifier = Modifier.size(20.dp))
-
            Button(
-
-               modifier = Modifier,
+               modifier = Modifier.height(46.dp),
                shape = RoundedCornerShape(8.dp),
                colors = ButtonDefaults.buttonColors(
-                   containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                   containerColor = MaterialTheme.colorScheme.primary,
                    contentColor = MaterialTheme.colorScheme.onSecondary
                ),
-               onClick = { /*TODO*/ }
-               ) {
+               onClick = {
+                   photoPickerLauncher.launch(
+                       PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                   )
+               }) {
+               Row {
+                   Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                   Text(
+                       "Pick a Photo",
+                       style = TextStyle(fontSize = 18.sp)
+                   )
+               }
 
+               AsyncImage(
+                   modifier = Modifier
+                       .fillMaxWidth()
+                       .height(240.dp)
+                       .clip(RoundedCornerShape(R.dimen.padding_small))
+                   ,
+                   model = selectedImageUri,
+                   contentDescription = null,
+                   contentScale = ContentScale.FillBounds
+                   )
            }
 
-           AsyncImage(
-               modifier = Modifier
-                   .fillMaxWidth()
-                   .height(240.dp)
-                   .clip(RoundedCornerShape(8.dp))
-               ,
-               model = selectedImageUri,
-               contentDescription = null
-           )
+
        }
     }
 }
