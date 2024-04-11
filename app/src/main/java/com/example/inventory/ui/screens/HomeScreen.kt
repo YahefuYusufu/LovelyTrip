@@ -96,6 +96,7 @@ fun HomeScreen(
             }
         },
     ) { innerPadding ->
+
         HomeBody(
             itemList = homeUiState.itemList,
             onItemClick = navigateToItemUpdate,
@@ -112,15 +113,14 @@ private fun HomeBody(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-        ,
+        verticalArrangement = Arrangement.Center,
 
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.background
             ),
 
-    ) {
+        ) {
         if (itemList.isEmpty()) {
             Text(
                 text = stringResource(R.string.no_item_description),
@@ -149,7 +149,7 @@ private fun TripList(
                     .padding(dimensionResource(id = R.dimen.padding_small))
                     .clickable { onItemClick(item) },
 
-            )
+                )
         }
     }
 }
@@ -182,8 +182,7 @@ private fun TripItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                    ,
+                        .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.FillBounds // Adjust as needed
                 )
             }
@@ -209,10 +208,10 @@ private fun TripItem(
 
         }
 
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = item.addedDate.changeMillisToDateString(),
                 style = MaterialTheme.typography.bodySmall,
