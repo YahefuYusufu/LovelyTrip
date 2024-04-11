@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -35,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -46,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.inventory.TopAppBar
 import com.example.inventory.R
 import com.example.inventory.components.changeMillisToDateString
@@ -214,14 +217,21 @@ fun ItemDetails(
                 )
             )
 
-            Image(
-                painter = painterResource(id = R.drawable.ic_splash),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Fit
-            )
+            // Display image
+            item.image?.let { bitmap ->
+                val painter = rememberAsyncImagePainter(bitmap)
+
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                    ,
+                    contentScale = ContentScale.FillBounds
+                )
+            }
         }
 
     }
@@ -261,16 +271,16 @@ private fun ItemDetailsRow(
         Text(text = itemDetail)
     }
 }
-@Composable
-private fun ItemAddedDateRow(
-    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
-) {
-    Row(modifier = modifier) {
-        Text(text = stringResource(labelResID), fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.weight(1f))
-        Text(text = itemDetail)
-    }
-}
+//@Composable
+//private fun ItemAddedDateRow(
+//    @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
+//) {
+//    Row(modifier = modifier) {
+//        Text(text = stringResource(labelResID), fontWeight = FontWeight.Bold)
+//        Spacer(modifier = Modifier.weight(1f))
+//        Text(text = itemDetail)
+//    }
+//}
 @Composable
 private fun ItemDetailsSummary(
     @StringRes labelResID: Int, itemDetail: String, modifier: Modifier = Modifier
