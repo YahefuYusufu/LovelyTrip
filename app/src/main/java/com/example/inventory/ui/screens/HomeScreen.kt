@@ -112,12 +112,13 @@ private fun HomeBody(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+        ,
+
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.background
-            )
-
-        ,
+            ),
 
     ) {
         if (itemList.isEmpty()) {

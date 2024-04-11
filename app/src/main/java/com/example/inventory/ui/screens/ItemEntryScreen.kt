@@ -10,14 +10,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -258,21 +263,48 @@ fun ItemInputForm(
         }
 
 //        //Image Picker
-        Button(
-            onClick = { imagePickerLauncher.launch("image/*")},
+//        Button(
+//            onClick = { imagePickerLauncher.launch("image/*")},
+//            modifier = Modifier
+//                .padding(vertical = 16.dp)
+//
+//        ) {
+//            Text("Select Image")
+//        }
+//
+//        //Display selected Image
+//        bitmap?.let { loadedBitmap ->
+//            Image(
+//                bitmap = loadedBitmap.asImageBitmap(),
+//
+//                contentDescription = null
+//            )
+//        }
+        // Image Picker
+        Box(
             modifier = Modifier
-                .padding(vertical = 16.dp)
                 .fillMaxWidth()
+                .height(200.dp)
         ) {
-            Text("Select Image")
-        }
-
-        //Display selected Image
-        bitmap?.let { loadedBitmap ->
-            Image(
-                bitmap = loadedBitmap.asImageBitmap(),
-                contentDescription = null
-            )
+            // Display selected Image or default photo icon
+            if (bitmap != null) {
+                Image(
+                    bitmap = bitmap!!.asImageBitmap(),
+                    contentDescription = stringResource(R.string.select_image),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            } else {
+                IconButton(
+                    onClick = { imagePickerLauncher.launch("image/*") },
+                    modifier = Modifier.align(Alignment.Center).fillMaxSize()
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Photo,
+                        contentDescription = stringResource(R.string.select_image),
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
         }
     }
 
