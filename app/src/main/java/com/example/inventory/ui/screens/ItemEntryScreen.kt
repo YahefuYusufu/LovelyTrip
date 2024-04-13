@@ -92,7 +92,6 @@ fun ItemEntryScreen(
             onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
                 coroutineScope.launch {
-
                     viewModel.saveItem()
                     navigateBack()
                 }
@@ -122,7 +121,8 @@ fun ItemEntryBody(
 
         ItemInputForm(
             itemDetails = itemUiState.itemDetails,
-            onValueChange = onItemValueChange
+            onValueChange = onItemValueChange,
+            modifier = Modifier.fillMaxWidth()
         )
         Button(
             onClick = onSaveClick,
@@ -141,6 +141,7 @@ fun ItemEntryBody(
 @Composable
 fun ItemInputForm(
     itemDetails: ItemDetails,
+    modifier: Modifier = Modifier,
     onValueChange: (ItemDetails) -> Unit = {},
     enabled: Boolean = true
 ) {
@@ -171,7 +172,7 @@ fun ItemInputForm(
         }
     }
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Row(
@@ -180,7 +181,7 @@ fun ItemInputForm(
         ){
             OutlinedTextField(
                 value = itemDetails.country,
-                onValueChange = {newCountry -> onValueChange(itemDetails.copy(country = newCountry)) },
+                onValueChange = {onValueChange(itemDetails.copy(country = it)) },
                 label = { Text(stringResource(R.string.country)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -193,7 +194,7 @@ fun ItemInputForm(
             )
             OutlinedTextField(
                 value = itemDetails.city,
-                onValueChange = { newCity -> onValueChange(itemDetails.copy(city = newCity)) },
+                onValueChange = { onValueChange(itemDetails.copy(city = it)) },
                 label = { Text(stringResource(R.string.city)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -210,7 +211,7 @@ fun ItemInputForm(
         }
         OutlinedTextField(
             value = itemDetails.summary,
-            onValueChange = { newSummary -> onValueChange(itemDetails.copy(summary = newSummary)) },
+            onValueChange = {  onValueChange(itemDetails.copy(summary = it)) },
             label = { Text(stringResource(R.string.summary)) },
             minLines = 3,
             maxLines = 5,
@@ -225,7 +226,7 @@ fun ItemInputForm(
         )
         RatingInputRow(
             rating = itemDetails.rating,
-            onRatingChange = {newRating -> onValueChange(itemDetails.copy(rating = newRating ))} )
+            onRatingChange = { onValueChange(itemDetails.copy(rating = it ))} )
 
         //Date Picker
         ItemDatePicker(
@@ -248,7 +249,7 @@ fun ItemInputForm(
         ){
             Text(
                 text = datePickerState.selectedDateMillis.changeMillisToDateString(),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyLarge
             )
 
             IconButton(
@@ -291,12 +292,14 @@ fun ItemInputForm(
                 Image(
                     bitmap = bitmap!!.asImageBitmap(),
                     contentDescription = stringResource(R.string.select_image),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             } else {
                 IconButton(
                     onClick = { imagePickerLauncher.launch("image/*") },
-                    modifier = Modifier.align(Alignment.Center).fillMaxSize()
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .fillMaxSize(),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Photo,

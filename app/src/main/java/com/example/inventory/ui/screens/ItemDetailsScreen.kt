@@ -85,19 +85,21 @@ fun ItemDetailsScreen(
                 canNavigateBack = true,
                 navigateUp = navigateBack
             )
-        }, floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navigateToEditItem(uiState.value.itemDetails.id) },
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
-
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(R.string.edit_item_title),
-                )
-            }
-        }, modifier = modifier
+        },
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                onClick = { navigateToEditItem(uiState.value.itemDetails.id) },
+//                shape = MaterialTheme.shapes.medium,
+//                modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_large))
+//
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Default.Edit,
+//                    contentDescription = stringResource(R.string.edit_item_title),
+//                )
+//            }
+//        },
+        modifier = modifier
     ) { innerPadding ->
         ItemDetailsBody(
             itemDetailsUiState = uiState.value,

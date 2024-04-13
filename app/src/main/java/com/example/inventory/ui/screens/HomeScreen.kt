@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -142,13 +143,12 @@ private fun TripList(
     itemList: List<Item>, onItemClick: (Item) -> Unit, modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
-        items(items = itemList, key = { it.id }) { item ->
+        itemsIndexed(items = itemList.reversed()) { index, item ->
             TripItem(
                 item = item,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small))
                     .clickable { onItemClick(item) },
-
                 )
         }
     }
