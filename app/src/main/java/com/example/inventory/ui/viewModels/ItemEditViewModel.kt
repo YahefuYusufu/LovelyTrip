@@ -27,6 +27,7 @@ class ItemEditViewModel(
 
     private val itemId: Int = checkNotNull(savedStateHandle[ItemEditDestination.itemIdArg])
 
+    //Here, getItemStream(itemId) is responsible for fetching the item based on the itemId. The filterNotNull() is used to filter out any null values, and first() is used to get the first emitted item from the stream. The fetched item is then converted to an ItemUiState using .toItemUiState(true).
     init {
         viewModelScope.launch {
             itemUiState = itemsRepository.getItemStream(itemId)
