@@ -2,7 +2,7 @@
 
 Welcome to LovelyTrip! This is a mobile app that allows users to save and plan their trips, providing features to record trip details such as country, city, date, summary, and images.
 
-![LovelyTrip App](res/drawable/lovelytrip_banner.png)
+![LovelyTrip App](images/lovelytrip_banner.png)
 
 ## Features
 
@@ -15,10 +15,10 @@ Welcome to LovelyTrip! This is a mobile app that allows users to save and plan t
 
 Here are some screenshots from the LovelyTrip app:
 
-![Screenshot 1](res/drawable/screenshot1.png)
+![Screenshot 1](images/screenshot1.png)
 *Add a new trip*
 
-![Screenshot 2](res/drawable/screenshot2.png)
+![Screenshot 2](images/screenshot2.png)
 *View trip details*
 
 ## Tools and Dependencies
