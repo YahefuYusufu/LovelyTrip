@@ -22,11 +22,7 @@ Here are some screenshots from the LovelyTrip app:
   <img src="Screenshot/screenshot5.png" />
   
 </p>
-![Screenshot 1](images/screenshot1.png)
-*Add a new trip*
 
-![Screenshot 2](images/screenshot2.png)
-*View trip details*
 
 ## Tools and Dependencies
 
