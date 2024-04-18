@@ -24,4 +24,5 @@
         <item quantity="other">%d stars</item>
     </plurals>
 
-    <string name="required_fields">*required fields</string></resources>
+    <string name="required_fields">*required fields</string>
+</resources>

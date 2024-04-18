@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.inventory"
+    namespace = "com.lovelytrip.lovelyTrip"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.lovelyTrip"
+        applicationId = "com.lovelytrip.lovelyTrip"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
