@@ -16,10 +16,10 @@ Welcome to LovelyTrip! This is a mobile app that allows users to save and plan t
 Here are some screenshots from the LovelyTrip app:
 <p align="center">
   <img src="images/screenshot1.png" />
-  <img src="images/screenshot1.png" />
-  <img src="images/screenshot1.png" />
-  <img src="images/screenshot1.png" />
-  <img src="images/screenshot1.png" />
+  <img src="images/screenshot2.png" />
+  <img src="images/screenshot3.png" />
+  <img src="images/screenshot4.png" />
+  <img src="images/screenshot5.png" />
   
 </p>
 ![Screenshot 1](images/screenshot1.png)
