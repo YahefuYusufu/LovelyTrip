@@ -14,7 +14,14 @@ Welcome to LovelyTrip! This is a mobile app that allows users to save and plan t
 ## Screenshots
 
 Here are some screenshots from the LovelyTrip app:
-
+<p align="center">
+  <img src="images/screenshot1.png" />
+  <img src="images/screenshot1.png" />
+  <img src="images/screenshot1.png" />
+  <img src="images/screenshot1.png" />
+  <img src="images/screenshot1.png" />
+  
+</p>
 ![Screenshot 1](images/screenshot1.png)
 *Add a new trip*
 
