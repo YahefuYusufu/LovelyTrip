@@ -14,6 +14,7 @@ Welcome to LovelyTrip! This is a mobile app that allows users to save and plan t
 - **User-Friendly Interface**: Simple and intuitive interface for easy trip management.
 
 ## Screenshots
+This is for the android part.
 
 Here are some screenshots from the LovelyTrip app:
 <p align="center">
