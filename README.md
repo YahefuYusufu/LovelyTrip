@@ -55,6 +55,7 @@ Once installed, follow these steps to start using LovelyTrip:
 2. Click on the "+" button to add a new trip.
 3. Enter trip details and save.
 4. View and manage your trips from the main screen.
+5. We will publish this app soon.
 
 ## Feedback
 
