@@ -68,7 +68,7 @@ Contributions are welcome! If you'd like to contribute to LovelyTrip, please fol
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSES).
 
 ---
 
