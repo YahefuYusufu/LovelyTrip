@@ -46,6 +46,7 @@ To install LovelyTrip on your Android device, follow these steps:
 2. Open the project in Android Studio.
 3. Connect your Android device.
 4. Build and run the app.
+5. Clean the catch and run it again if got some error.
 
 ## Usage
 
