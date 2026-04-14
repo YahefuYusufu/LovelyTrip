@@ -60,7 +60,7 @@ Once installed, follow these steps to start using LovelyTrip:
 
 ## Feedback
 
-We hope you enjoy using LovelyTrip! If you have any feedback or suggestions for improvement, please feel free to [open an issue](https://github.com/yourusername/lovelytrip-app/issues) on GitHub.
+We hope you enjoy using LovelyTrip! If you have any feedback or suggestions for improvement, please feel free to [open an issue](https://github.com/yourusername/lovelytrip-app/issues) on GitHub or Bitbucket.
 
 ## Contributing
 
